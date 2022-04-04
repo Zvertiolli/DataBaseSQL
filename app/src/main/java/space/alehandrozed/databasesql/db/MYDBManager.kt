@@ -22,18 +22,20 @@ class MYDBManager(context: Context) {
         db?.insert(MyDBNameClass.TABLE_NAME, null, values)
     }
 
-    fun readDBData(): ArrayList<String> {
-        val dataList = ArrayList<String>()
+    fun readDBData(): ArrayList<TitleContent> {
+        val dataList = ArrayList<TitleContent>()
         val cursor = db?.query(
             MyDBNameClass.TABLE_NAME, null,
             null, null, null, null, null
         )
         with(cursor) {
             while (this?.moveToNext()!!) {
-                val dataText =
-                    cursor?.getString(cursor.getColumnIndexOrThrow(MyDBNameClass.COLUMN_NAME_TITLE))
-                dataList.add(dataText.toString())
-
+                val dataText = cursor?.getString(cursor.getColumnIndexOrThrow(MyDBNameClass.COLUMN_NAME_TITLE))
+                val dataContext = cursor?.getString(cursor.getColumnIndexOrThrow(MyDBNameClass.COLUMN_NAME_CONTENT))
+                val result = TitleContent()
+                result.title = dataText.toString()
+                result.context = dataContext.toString()
+                dataList.add(result)
             }
         }
         cursor?.close()

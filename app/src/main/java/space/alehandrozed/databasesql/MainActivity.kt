@@ -18,18 +18,17 @@ class MainActivity : AppCompatActivity() {
         mydbManager.openDB()
         val dataList = mydbManager.readDBData()
         for (item in dataList) {
-            tvTest.append(item)
-            tvTest.append("\n")
+            tvTest.append(item.title + " - " + item.context + "\n")
         }
     }
+
     fun onClickSave(view: View) {
         tvTest.text = ""
         mydbManager.insertToDB(edTitle.text.toString(), edContent.text.toString())
 
         val dataList = mydbManager.readDBData()
         for (item in dataList) {
-            tvTest.append(item)
-            tvTest.append("\n")
+            tvTest.append(item.title + " - " + item.context + "\n")
         }
 
     }
